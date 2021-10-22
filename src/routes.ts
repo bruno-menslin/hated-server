@@ -4,6 +4,7 @@ import { FeatureController } from "./controllers/FeatureController";
 import { UserController } from "./controllers/UserController";
 
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
+import { ensureAdmin } from "./middlewares/ensureAdmin";
 
 const router = Router();
 
@@ -15,6 +16,6 @@ router.post('/login', authenticationController.login);
 
 router.post('/users', userController.create);
 
-router.post('/features', ensureAuthenticated, featureController.create);
+router.post('/features', ensureAuthenticated, ensureAdmin, featureController.create);
 
 export { router };
