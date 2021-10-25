@@ -1,4 +1,4 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Not } from "typeorm";
 import { UserRepository } from "../repositories/UserRepository";
 import { hash } from "bcryptjs";
 import { classToPlain } from "class-transformer";
@@ -53,6 +53,40 @@ class UserService {
         const user = await userRepository.findOne(id);
 
         return classToPlain(user);
+    }
+
+    async update(id: string, {username, email, password, admin = false} : Iuser) {
+        const userRepository = getCustomRepository(UserRepository);
+
+        const user = await userRepository.findOne(id);
+
+        if (!user) {
+            throw new Error('user not found');
+        }
+
+        const userAlreadyExists = await userRepository.findOne({
+            where: [
+                {id: Not(id), username: username},
+                {id: Not(id), email: email}
+            ]
+        });
+
+        if (userAlreadyExists) {
+            throw new Error('username or email already exists');
+        }
+
+        const passwordHash = await hash(password, 8);
+
+        userRepository.merge(user, {
+            username: username, 
+            email: email, 
+            password: passwordHash,
+            admin: admin
+        });
+
+        await userRepository.save(user);
+
+        return user;
     }
 }
 

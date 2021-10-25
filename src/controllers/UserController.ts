@@ -30,6 +30,20 @@ class UserController {
 
         return response.json(user);
     }
+
+    async update(request: Request, response: Response) {
+
+        const {username, email, password, admin} = request.body;
+
+        const userService = new UserService();
+
+        const user = await userService.update(
+            request.params.id,
+            {username, email, password, admin}
+        );
+
+        return response.json(user);
+    }
 }
 
 export { UserController };
