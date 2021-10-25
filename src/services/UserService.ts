@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { UserRepository } from "../repositories/UserRepository";
 import { hash } from "bcryptjs";
+import { classToPlain } from "class-transformer";
 
 interface Iuser {
     username: string
@@ -36,6 +37,14 @@ class UserService {
         await userRepository.save(user);
 
         return user;
+    }
+
+    async find() {
+        const userRepository = getCustomRepository(UserRepository);
+
+        const users = await userRepository.find();
+
+        return classToPlain(users);
     }
 }
 

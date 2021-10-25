@@ -12,6 +12,15 @@ class UserController {
 
         return response.json(user);
     }
+
+    async find(request: Request, response: Response) {
+
+        const userService = new UserService();
+
+        const users = await userService.find();
+
+        return response.json(users);
+    }
 }
 
 export { UserController };

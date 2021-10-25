@@ -15,6 +15,7 @@ const authenticationController = new AuthenticationController();
 router.post('/login', authenticationController.login);
 
 router.post('/users', userController.create);
+router.get('/users', ensureAuthenticated, ensureAdmin, userController.find);
 
 router.post('/features', ensureAuthenticated, ensureAdmin, featureController.create);
 
