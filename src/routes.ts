@@ -16,6 +16,7 @@ router.post('/login', authenticationController.login);
 
 router.post('/users', userController.create);
 router.get('/users', ensureAuthenticated, ensureAdmin, userController.find);
+router.get('/users/:id', ensureAuthenticated, userController.findOne);
 
 router.post('/features', ensureAuthenticated, ensureAdmin, featureController.create);
 

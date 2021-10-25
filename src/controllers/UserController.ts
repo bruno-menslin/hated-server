@@ -21,6 +21,15 @@ class UserController {
 
         return response.json(users);
     }
+
+    async findOne(request: Request, response: Response) {
+
+        const userService = new UserService();
+
+        const user = await userService.findOne(request.params.id);
+
+        return response.json(user);
+    }
 }
 
 export { UserController };

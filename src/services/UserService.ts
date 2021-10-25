@@ -46,6 +46,14 @@ class UserService {
 
         return classToPlain(users);
     }
+
+    async findOne(id: string) {
+        const userRepository = getCustomRepository(UserRepository);
+
+        const user = await userRepository.findOne(id);
+
+        return classToPlain(user);
+    }
 }
 
 export { UserService };
