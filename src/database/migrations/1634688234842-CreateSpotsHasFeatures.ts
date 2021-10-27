@@ -26,7 +26,7 @@ export class CreateSpotsHasFeatures1634688234842 implements MigrationInterface {
                     {
                         name: "spots_code",
                         referencedTableName: "spots",
-                        referencedColumnNames: ["id"],
+                        referencedColumnNames: ["code"],
                         columnNames: ["spots_code"],
                         onDelete: "CASCADE"
                     },
