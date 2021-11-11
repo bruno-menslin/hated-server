@@ -9,11 +9,6 @@ export class CreateSpotsHasFeatures1634688234842 implements MigrationInterface {
                 name: "spots_has_features",
                 columns: [
                     {
-                        name: "id",
-                        type: "uuid",
-                        isPrimary: true
-                    },
-                    {
                         name: "spots_code",
                         type: "uuid"
                     },

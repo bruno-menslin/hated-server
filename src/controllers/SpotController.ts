@@ -9,7 +9,7 @@ class SpotController {
 
         const spotService = new SpotService();
 
-        const spot = await spotService.create({latitude, longitude, image, features, address, user_id});
+        const spot = await spotService.create({latitude, longitude, image, featuresNames: features, address, user_id});
 
         return response.json(spot);
     }
