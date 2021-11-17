@@ -21,9 +21,11 @@ class User {
     @Column()
     admin: boolean;
     
+    @Exclude()
     @CreateDateColumn()
     created_at: Date;
 
+    @Exclude()
     @UpdateDateColumn()
     updated_at: Date;
 

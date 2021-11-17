@@ -2,6 +2,7 @@ import {Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, ManyT
 import {v4 as uuid} from "uuid";
 import { Feature } from "./Feature";
 import { User } from "./User";
+import { Exclude } from "class-transformer";
 
 @Entity("spots")
 class Spot {
@@ -39,9 +40,11 @@ class Spot {
     })
     features: Feature[];
 
+    @Exclude()
     @CreateDateColumn()
     created_at: Date;
 
+    @Exclude()
     @UpdateDateColumn()
     updated_at: Date;
 
