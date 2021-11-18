@@ -27,5 +27,6 @@ router.post('/spots', ensureAuthenticated, spotController.create);
 router.get('/spots', spotController.find);
 router.get('/spots/:id', spotController.findOne);
 router.put('/spots/:code', ensureAuthenticated, spotController.update);
+router.delete('/spots/:code', ensureAuthenticated, spotController.delete);
 
 export { router };

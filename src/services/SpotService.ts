@@ -1,7 +1,7 @@
 import { getCustomRepository, Not } from "typeorm";
 import { SpotRepository } from "../repositories/SpotRepository";
 import { Feature } from "../entities/Feature";
-import { request } from "express";
+import { request, response } from "express";
 import { FeatureRepository } from "../repositories/FeatureRepository";
 import { classToPlain } from "class-transformer";
 import { UserRepository } from "../repositories/UserRepository";
@@ -139,6 +139,18 @@ class SpotService {
         await spotRepository.save(spot);
 
         return spot;
+    }
+
+    async delete(code: string) {
+        const spotRepository = getCustomRepository(SpotRepository);
+
+        const spot = await spotRepository.findOne(code);
+
+        if (!spot) {
+            throw new Error('spot not found');
+        }
+
+        return await spotRepository.remove(spot);
     }
 }
 

@@ -45,6 +45,15 @@ class SpotController {
 
         return response.json(spot);
     }
+
+    async delete(request: Request, response: Response) {
+
+        const spotService = new SpotService();
+
+        const spot = await spotService.delete(request.params.code);
+
+        return response.status(200).end();
+    }
 }
 
 export { SpotController };
