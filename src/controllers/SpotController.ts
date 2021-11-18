@@ -27,7 +27,7 @@ class SpotController {
 
         const spotService = new SpotService();
 
-        const spot = await spotService.findOne(request.params.id);
+        const spot = await spotService.findOne(request.params.code);
 
         return response.json(spot);
     }

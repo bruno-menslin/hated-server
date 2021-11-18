@@ -79,10 +79,10 @@ class SpotService {
         return classToPlain(spots);
     }
 
-    async findOne(id: string) {
+    async findOne(code: string) {
         const spotRepository = getCustomRepository(SpotRepository);
 
-        const spot = await spotRepository.findOne(id, {
+        const spot = await spotRepository.findOne(code, {
             relations: ["features"]
         });
 
