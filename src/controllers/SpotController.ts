@@ -13,6 +13,15 @@ class SpotController {
 
         return response.json(spot);
     }
+
+    async find(request: Request, response: Response) {
+
+        const spotService = new SpotService();
+
+        const spots = await spotService.find();
+
+        return response.json(spots);
+    }
 }
 
 export { SpotController };

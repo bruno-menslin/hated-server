@@ -6,7 +6,6 @@ import { FeatureRepository } from "../repositories/FeatureRepository";
 import { classToPlain } from "class-transformer";
 import { UserRepository } from "../repositories/UserRepository";
 
-
 interface Ispot {
     latitude: number
     longitude: number
@@ -68,6 +67,16 @@ class SpotService {
         await spotRepository.save(spot);
 
         return spot;
+    }
+
+    async find() {
+        const spotRepository = getCustomRepository(SpotRepository);
+
+        const spots = await spotRepository.find({
+            relations: ["features"]
+        });
+
+        return classToPlain(spots);
     }
 }
 
