@@ -1,4 +1,4 @@
-import { getCustomRepository, ILike } from "typeorm";
+import { getCustomRepository, Not } from "typeorm";
 import { SpotRepository } from "../repositories/SpotRepository";
 import { Feature } from "../entities/Feature";
 import { request } from "express";
@@ -12,7 +12,7 @@ interface Ispot {
     image: string
     featuresNames: Array<string>
     address?: string
-    user_id: string
+    user_id?: string
 }
 
 class SpotService {
@@ -87,6 +87,58 @@ class SpotService {
         });
 
         return classToPlain(spot);
+    }
+
+    async update(code: string, {latitude, longitude, image, featuresNames, address = null} : Ispot) {
+        const spotRepository = getCustomRepository(SpotRepository);
+        const userRepository = getCustomRepository(UserRepository);
+        const featureRepository = getCustomRepository(FeatureRepository);
+
+        const spot = await spotRepository.findOne(code);
+
+        if (!spot) {
+            throw new Error('spot not found');
+        }
+        
+        const spotAlreadyExists = await spotRepository.findOne({
+            where: [
+                {code: Not(code), latitude: latitude, longitude: longitude}
+            ]
+        });
+
+        if (spotAlreadyExists) {
+            throw new Error('already exists spot in this location');
+        }
+
+        //promise
+        const pFeatures = featuresNames.map(featureName => {
+            return featureRepository.find({
+                where: {
+                    name: featureName
+                }
+            })
+        })
+
+        const features = await Promise.all(pFeatures);
+        
+        const filteredFeatures = features.map((feature, i) => {
+            if (!feature[0]) {
+                throw new Error(`feature "${featuresNames[i]}" not found`)
+            }
+            return feature[0]
+        });
+
+        spotRepository.merge(spot, {
+            latitude: latitude,
+            longitude: longitude,
+            image: image,
+            address: address,
+            features: filteredFeatures
+        });
+
+        await spotRepository.save(spot);
+
+        return spot;
     }
 }
 

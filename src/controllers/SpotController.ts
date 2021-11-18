@@ -31,6 +31,20 @@ class SpotController {
 
         return response.json(spot);
     }
+
+    async update(request: Request, response: Response) {
+
+        const {latitude, longitude, image, features, address = null} = request.body;
+
+        const spotService = new SpotService();
+
+        const spot = await spotService.update(
+            request.params.code,
+            {latitude, longitude, image, featuresNames: features, address}
+        );
+
+        return response.json(spot);
+    }
 }
 
 export { SpotController };
