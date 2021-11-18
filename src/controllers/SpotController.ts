@@ -22,6 +22,15 @@ class SpotController {
 
         return response.json(spots);
     }
+
+    async findOne(request: Request, response: Response) {
+
+        const spotService = new SpotService();
+
+        const spot = await spotService.findOne(request.params.id);
+
+        return response.json(spot);
+    }
 }
 
 export { SpotController };

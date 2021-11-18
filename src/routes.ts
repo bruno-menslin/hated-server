@@ -25,5 +25,6 @@ router.put('/users/:id', ensureAuthenticated, userController.update);
 
 router.post('/spots', ensureAuthenticated, spotController.create);
 router.get('/spots', spotController.find);
+router.get('/spots/:id', spotController.findOne);
 
 export { router };
