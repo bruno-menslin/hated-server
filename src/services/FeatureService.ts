@@ -1,3 +1,4 @@
+import { classToPlain } from "class-transformer";
 import { getCustomRepository } from "typeorm";
 import { FeatureRepository } from "../repositories/FeatureRepository";
 
@@ -26,6 +27,14 @@ class FeatureService {
         await featureRepository.save(feature);
 
         return feature;
+    }
+
+    async find() {
+        const featureRepository = getCustomRepository(FeatureRepository);
+
+        const features = await featureRepository.find();
+
+        return classToPlain(features);
     }
 }
 

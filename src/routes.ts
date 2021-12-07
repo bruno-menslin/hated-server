@@ -17,6 +17,7 @@ const spotController = new SpotController();
 router.post('/login', authenticationController.login);
 
 router.post('/features', ensureAuthenticated, ensureAdmin, featureController.create);
+router.get('/features', ensureAuthenticated, featureController.find)
 
 router.post('/users', userController.create);
 router.get('/users', ensureAuthenticated, ensureAdmin, userController.find);

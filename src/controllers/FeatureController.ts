@@ -12,6 +12,15 @@ class FeatureController {
 
         return response.json(feature);
     }
+
+    async find(request: Request, response: Response) {
+
+        const featureService = new FeatureService();
+
+        const features = await featureService.find();
+
+        return response.json(features);
+    }
 }
 
 export { FeatureController };
