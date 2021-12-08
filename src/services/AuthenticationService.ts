@@ -3,6 +3,7 @@ import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
 import { UserRepository } from "../repositories/UserRepository";
+import { classToPlain } from "class-transformer";
 
 interface Iauth {
     email: string,
@@ -37,7 +38,10 @@ class AuthenticationService {
             }
         );
 
-        return token;
+        return {
+            token: token,
+            user: classToPlain(user)
+        };
     }
 }
 
