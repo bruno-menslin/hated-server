@@ -33,13 +33,13 @@ class UserController {
 
     async update(request: Request, response: Response) {
 
-        const {username, email, password, admin} = request.body;
+        const {username, email, password} = request.body;
 
         const userService = new UserService();
 
         const user = await userService.update(
             request.user_id,
-            {username, email, password, admin}
+            {username, email, password}
         );
 
         return response.json(user);
