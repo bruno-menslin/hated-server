@@ -51,7 +51,10 @@ class SpotController {
 
         const spotService = new SpotService();
 
-        const spot = await spotService.delete(request.params.code);
+        const spot = await spotService.delete(
+            request.user_id,
+            request.params.code
+        );
 
         return response.status(200).end();
     }

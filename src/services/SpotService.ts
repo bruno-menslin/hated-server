@@ -145,10 +145,15 @@ class SpotService {
         return spot;
     }
 
-    async delete(code: string) {
+    async delete(user_id: string, code: string) {
         const spotRepository = getCustomRepository(SpotRepository);
+        const userRepository = getCustomRepository(UserRepository);
 
-        const spot = await spotRepository.findOne(code);
+        const user = await userRepository.findOne(user_id);
+
+        const spot = await spotRepository.findOne({
+            where: (user.admin) ? {code: code} : {code: code, user: user}
+        });
 
         if (!spot) {
             throw new Error('spot not found');
