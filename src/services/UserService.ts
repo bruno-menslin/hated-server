@@ -63,9 +63,7 @@ class UserService {
         const user = await userRepository.findOne(id);
 
         const spots = await spotRepository.find({
-            where: {
-                user: user
-            },
+            where: (user.admin) ? {} : {user: user},
             relations: ["features"]
         });
         
