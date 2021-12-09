@@ -31,6 +31,15 @@ class UserController {
         return response.json(user);
     }
 
+    async findSpots(request: Request, response: Response) {
+
+        const userService = new UserService();
+
+        const spots = await userService.findSpots(request.user_id);
+
+        return response.json(spots);
+    }
+
     async update(request: Request, response: Response) {
 
         const {username, email, password} = request.body;

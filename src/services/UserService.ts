@@ -2,6 +2,7 @@ import { getCustomRepository, Not } from "typeorm";
 import { UserRepository } from "../repositories/UserRepository";
 import { hash } from "bcryptjs";
 import { classToPlain } from "class-transformer";
+import { SpotRepository } from "../repositories/SpotRepository";
 
 interface Iuser {
     username: string
@@ -53,6 +54,22 @@ class UserService {
         const user = await userRepository.findOne(id);
 
         return classToPlain(user);
+    }
+
+    async findSpots(id: string) {
+        const userRepository = getCustomRepository(UserRepository);
+        const spotRepository = getCustomRepository(SpotRepository);
+
+        const user = await userRepository.findOne(id);
+
+        const spots = await spotRepository.find({
+            where: {
+                user: user
+            },
+            relations: ["features"]
+        });
+        
+        return classToPlain(spots);
     }
 
     async update(id: string, {username, email, password, admin = false} : Iuser) {

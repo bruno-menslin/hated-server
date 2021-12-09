@@ -22,6 +22,7 @@ router.get('/features', ensureAuthenticated, featureController.find)
 router.post('/users', userController.create);
 router.get('/users', ensureAuthenticated, ensureAdmin, userController.find);
 router.get('/users/:id', ensureAuthenticated, userController.findOne);
+router.get('/users/:id/spots', ensureAuthenticated, userController.findSpots);
 router.put('/users/:id', ensureAuthenticated, userController.update);
 
 router.post('/spots', ensureAuthenticated, spotController.create);
