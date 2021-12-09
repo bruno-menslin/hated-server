@@ -89,12 +89,16 @@ class SpotService {
         return classToPlain(spot);
     }
 
-    async update(code: string, {latitude, longitude, image, featuresNames, address = null} : Ispot) {
+    async update(user_id: string, code: string, {latitude, longitude, image, featuresNames, address = null} : Ispot) {
         const spotRepository = getCustomRepository(SpotRepository);
         const userRepository = getCustomRepository(UserRepository);
         const featureRepository = getCustomRepository(FeatureRepository);
 
-        const spot = await spotRepository.findOne(code);
+        const user = await userRepository.findOne(user_id);
+
+        const spot = await spotRepository.findOne({
+            where: (user.admin) ? {code: code} : {code: code, user: user}
+        });
 
         if (!spot) {
             throw new Error('spot not found');

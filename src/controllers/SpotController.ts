@@ -39,6 +39,7 @@ class SpotController {
         const spotService = new SpotService();
 
         const spot = await spotService.update(
+            request.user_id,
             request.params.code,
             {latitude, longitude, image, featuresNames: features, address}
         );
