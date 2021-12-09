@@ -26,7 +26,7 @@ class UserController {
 
         const userService = new UserService();
 
-        const user = await userService.findOne(request.params.id);
+        const user = await userService.findOne(request.user_id);
 
         return response.json(user);
     }
@@ -38,7 +38,7 @@ class UserController {
         const userService = new UserService();
 
         const user = await userService.update(
-            request.params.id,
+            request.user_id,
             {username, email, password, admin}
         );
 
