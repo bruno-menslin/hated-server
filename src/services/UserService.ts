@@ -86,7 +86,7 @@ class UserService {
 
         await userRepository.save(user);
 
-        return user;
+        return classToPlain(user);
     }
 }
 
